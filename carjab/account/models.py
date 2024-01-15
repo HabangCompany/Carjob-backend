@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 #일반 회원
 class User(AbstractUser):
-    nickname = models.CharField(max_length =10,unique = True, null=False)
+    nickname = models.CharField(max_length =10,unique = True, null = True)
     address = models.CharField(max_length = 50)
     phonenumber = models.CharField(max_length = 20, null=True)
 
