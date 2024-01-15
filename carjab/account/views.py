@@ -22,3 +22,14 @@ def signup(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET'])
+def idCheck(request):
+    username = request.GET.get('username')
+    if username is not None:
+        user = User.objects.filter(username=username)
+        if user.exists():
+            return Response({"message": "이미 존재하는 아이디입니다."}, status=400)
+        else:
+            return Response({"message": "사용 가능한 아이디입니다."}, status=200)
+    else:
+        return Response({"message": "아이디를 입력해주세요."}, status=400)
