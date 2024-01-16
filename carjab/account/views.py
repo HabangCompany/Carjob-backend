@@ -33,3 +33,16 @@ def idCheck(request):
             return Response({"message": "사용 가능한 아이디입니다."}, status=200)
     else:
         return Response({"message": "아이디를 입력해주세요."}, status=400)
+    
+@api_view(['GET'])
+def nicknameCheck(request):
+    nickname = request.GET.get('nickname')
+    if nickname is not None:
+        user = User.objects.filter(nickname=nickname)
+        if user.exists():
+            return Response({"message": "이미 존재하는 닉네임 입니다."}, status=400)
+        else:
+            return Response({"message": "사용 가능한 닉네임 입니다."}, status=200)
+    else:
+        return Response({"message": "닉네임을 입력해주세요."}, status=400)
+    
