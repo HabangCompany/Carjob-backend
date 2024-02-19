@@ -44,7 +44,8 @@ class LoginSerializer(serializers.Serializer):
 class StoreRegister(serializers.ModelSerializer):
     class Meta:
         model = Store
-        fields = ('storeName','storeTel', 'storeDescription','storeImage', 'storeSkill')
+        fields = '__all__'
+
     def create(self, validated_data):
         store =Store(
             storeName = validated_data['storeName'],

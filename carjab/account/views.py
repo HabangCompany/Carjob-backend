@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import viewsets ,status
 from .serializers import LoginSerializer, UserSerializers, StoreRegister
 from .models import User
+import json
 
 
 @api_view(['POST'])
@@ -58,10 +59,13 @@ def nicknameCheck(request):
 #업체등록
 @api_view(['POST'])
 def store_register(request):
-    print(request.data)
-    serializer = StoreRegister(data = request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.validated_data, status=status.HTTP_200_OK)
-    else:
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    res = request.data
+    print(res)
+
+    return Response("dd")
+    # serializer = StoreRegister(data = request.data)
+    # if serializer.is_valid():
+    #     serializer.save()
+    #     return Response(serializer.validated_data, status=status.HTTP_200_OK)
+    # else:
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
