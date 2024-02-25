@@ -61,8 +61,11 @@ def nicknameCheck(request):
 def store_register(request):
     res = request.data
     print(res)
-
-    return Response("dd")
+    serializer = StoreRegister(data =res ,  context ={'request' : request})
+    if serializer.is_valid() :
+        return Response("됬음")
+    else:
+        return Response("ㄴㄴ" , status=400)
     # serializer = StoreRegister(data = request.data)
     # if serializer.is_valid():
     #     serializer.save()

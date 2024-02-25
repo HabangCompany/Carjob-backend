@@ -41,17 +41,27 @@ class LoginSerializer(serializers.Serializer):
     
 
 #업체폼
+# class StoreRegister(serializers.ModelSerializer):
+#     class Meta:
+#         model = Store
+#         fields = '__all__'
+
+#     def create(self, validated_data):
+#         store =Store(
+#             storeName = validated_data['storeName'],
+#             storenTel = validated_data['storeTel'],
+#             storeDescription = validated_data['storeDescription'],
+#             storeImage = validated_data['storeImage'],
+#             storeSkill = validated_data['storeSkill'],
+#         )
+
+#         return store
+
+
+#업체폼
 class StoreRegister(serializers.ModelSerializer):
     class Meta:
         model = Store
         fields = '__all__'
-
-    def create(self, validated_data):
-        store =Store(
-            storeName = validated_data['storeName'],
-            storenTel = validated_data['storeTel'],
-            storeDescription = validated_data['storeDescription'],
-            storeImage = validated_data['storeImage'],
-            storeSkill = validated_data['storeSkill'],
-        )
-        return store
+    def create(self,validated_data):
+        pass
