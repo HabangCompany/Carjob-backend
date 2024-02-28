@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import datetime
 from pathlib import Path
+import os
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -151,3 +152,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #기본유저설정 설정
 AUTH_USER_MODEL = 'account.User'
+
+#미디어 저장 경로 설정 
+MEDIA_ROOT = os.path.join(BASE_DIR , 'media')
+
+MEDIA_URL = 'media/'
