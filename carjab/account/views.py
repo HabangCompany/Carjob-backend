@@ -5,8 +5,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 # 직렬화 API
 from rest_framework import viewsets ,status
-from .serializers import LoginSerializer, UserSerializers, StoreRegister
-from .models import User
+from .serializers import LoginSerializer, UserSerializers
+from .models import User , Store
 import json
 
 
@@ -20,18 +20,13 @@ def login(request):
         
 @api_view(['POST'])
 def signup(request):
+    response_data = request.data
+    print(response_data)
     serializer = UserSerializers(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-@api_view(['POST'])
-def store_register(request):
-    print(request)
-    print(request.data)
-
-
 
 @api_view(['GET'])
 def idCheck(request):
@@ -59,16 +54,35 @@ def nicknameCheck(request):
 #업체등록
 @api_view(['POST'])
 def store_register(request):
-    res = request.data
-    print(res)
-    serializer = StoreRegister(data =res ,  context ={'request' : request})
-    if serializer.is_valid() :
-        return Response("됬음")
-    else:
-        return Response("ㄴㄴ" , status=400)
-    # serializer = StoreRegister(data = request.data)
-    # if serializer.is_valid():
-    #     serializer.save()
-    #     return Response(serializer.validated_data, status=status.HTTP_200_OK)
-    # else:
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    response_data = request.data['data']
+    parseData = json.loads(response_data)
+
+    print(request.data)
+    if request.user:
+        user  = request.user
+        user.is_store = True
+        user.save()
+
+        storeName = parseData['storeName']
+        storeTel = parseData['storeTel']
+        storeDescription = parseData['storeDescription']
+        address = parseData['address']
+        zonecode = parseData['zonecode']
+        detailAddress = parseData['detailAddress']
+
+
+        try:
+            store = Store.objects.create(
+                user = user,
+                storeName =storeName,
+                storeTel=storeTel,
+                storeDescription=storeDescription,
+                address=address,
+                zonecode=zonecode,
+                detailAddress=detailAddress,
+            )
+        except:
+            print('등록실패')
+            return Response('등록실패')
+
+    return Response("응답옴")

@@ -5,7 +5,6 @@ from django.contrib.auth.models import AbstractUser
 #일반 회원
 class User(AbstractUser):
     nickname = models.CharField(max_length =10,unique = True, null = True)
-    address = models.CharField(max_length = 50)
     phonenumber = models.CharField(max_length = 20, null=True)
     is_store = models.BooleanField(default=False)
     class Meta:
@@ -20,6 +19,9 @@ class Store(models.Model):
     storeName = models.CharField(max_length =20, blank =False )
     storeTel = models.CharField(max_length =20, blank =False )
     storeDescription = models.CharField(max_length =20, blank =False)
+    address = models.CharField(max_length=30, blank=False)
+    zonecode = models.CharField(max_length=6 ,blank=False)
+    detailAddress = models.CharField(max_length=30, blank=False)
     storeThumbnail = models.ImageField()
 
     class Meta:
@@ -53,12 +55,3 @@ class StoreSkill(models.Model):
     class Meta:
         db_table ='StoreSkill'
 
-#업체 주소
-class StoreAddress(models.Model):
-    store = models.OneToOneField(Store, on_delete = models.CASCADE , related_name ='address')
-    address = models.CharField(max_length = 100)
-    zonecode = models.CharField(max_length = 10)
-    jibunAddress = models.CharField(max_length = 100)
-
-    class Meta:
-        db_table ='StoreAddress'
